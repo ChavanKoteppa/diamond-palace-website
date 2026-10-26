@@ -25,8 +25,6 @@ st.markdown(
         --gold-soft: #f0d7a6;
         --cream: #fff8eb;
         --dark: #120f0d;
-        --dark-2: #1b150f;
-        --coffee: #2b2019;
         --muted: #d9c8b1;
         --line: rgba(216,179,106,0.35);
         --panel: rgba(255,255,255,0.02);
@@ -364,41 +362,11 @@ st.markdown(
         border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .tab-bar {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-        margin: 0 auto 2rem;
-    }
-
-    .tab-button {
-        background: transparent;
-        border: 1px solid rgba(255,255,255,0.18);
-        color: var(--cream);
-        padding: 0.8rem 1.1rem;
-        font-size: 0.72rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: 0.2s ease;
-    }
-
-    .tab-button.active, .tab-button:hover {
-        background: rgba(216,179,106,0.12);
-        border-color: var(--gold);
-        color: var(--gold-soft);
-    }
-
-    .tab-panel {
-        display: none;
+    .tour-grid {
+        display: grid;
         grid-template-columns: 1.3fr 0.9fr;
         gap: 1.2rem;
         align-items: stretch;
-    }
-
-    .tab-panel.active {
-        display: grid;
     }
 
     .tour-image {
@@ -494,16 +462,11 @@ st.markdown(
     }
 
     @media (max-width: 980px) {
-        .story-grid,
-        .features-grid,
-        .gallery-grid,
-        .amenities-grid,
-        .tab-panel {
+        .story-grid, .features-grid, .gallery-grid, .amenities-grid, .tour-grid {
             grid-template-columns: 1fr 1fr;
         }
 
-        .story-grid,
-        .tab-panel {
+        .story-grid, .tour-grid {
             grid-template-columns: 1fr;
         }
 
@@ -517,10 +480,7 @@ st.markdown(
         .nav { gap: 0.7rem; }
         .hero { min-height: 72vh; }
         .section { padding: 4rem 0.7rem; }
-        .features-grid,
-        .gallery-grid,
-        .amenities-grid,
-        .stats { grid-template-columns: 1fr; }
+        .features-grid, .gallery-grid, .amenities-grid, .stats { grid-template-columns: 1fr; }
         .cta-box { padding: 1.5rem; }
         .cta-box h3 { font-size: 1.8rem; }
     }
@@ -645,75 +605,46 @@ st.markdown(
           <div class="label">Explore the venue</div>
           <h2>Take a virtual tour through our spaces.</h2>
         </div>
-
-        <div class="tab-bar">
-          <button class="tab-button active" data-tab="dining">Dining Hall</button>
-          <button class="tab-button" data-tab="stage">Stage</button>
-          <button class="tab-button" data-tab="seating">Seating Area</button>
-          <button class="tab-button" data-tab="exterior">Exterior View</button>
-          <button class="tab-button" data-tab="rooms">Rooms</button>
-        </div>
-
-        <div class="tab-panel active" id="tab-dining">
-          <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="tour-card">
-            <h3>Dining Hall</h3>
-            <p>Our dining hall is designed for comfort, elegance, and smooth guest flow. With warm lighting, refined decor, and a smart layout, it creates an inviting atmosphere for celebrations, receptions, and family gatherings.</p>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-stage">
-          <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="tour-card">
-            <h3>Stage</h3>
-            <p>Designed to stand out, our stage offers the perfect focal point for cultural performances, wedding rituals, speeches, and live events. It blends elegance with practical setup for lighting, stage decor, and audience visibility.</p>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-seating">
-          <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="tour-card">
-            <h3>Seating Area</h3>
-            <p>Guest comfort is central to our layout. The seating area is arranged to maintain clear views of the stage, easy movement between sections, and a balanced, welcoming experience for every visitor.</p>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-exterior">
-          <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="tour-card">
-            <h3>Exterior View</h3>
-            <p>The outside look of the venue reflects the premium experience waiting inside. With a dignified facade and welcoming presence, the building creates a memorable first impression for your guests.</p>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-rooms">
-          <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="tour-card">
-            <h3>Rooms</h3>
-            <p>Our rooms offer flexible support spaces for preparation, rest, and event planning. Ideal for family gatherings, ceremonies, or behind-the-scenes coordination, they provide privacy and convenience.</p>
-          </div>
-        </div>
       </div>
     </div>
-
-    <script>
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabPanels = document.querySelectorAll('.tab-panel');
-
-      tabButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          const target = button.dataset.tab;
-
-          tabButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
-          tabPanels.forEach((panel) => {
-            panel.classList.toggle('active', panel.id === 'tab-' + target);
-          });
-        });
-      });
-    </script>
     """,
     unsafe_allow_html=True,
 )
+
+space_data = [
+    (
+        "Dining Hall",
+        "Our dining hall is designed for comfort, elegance, and smooth guest flow. With warm lighting, refined decor, and a smart layout, it creates an inviting atmosphere for celebrations, receptions, and family gatherings.",
+        "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
+    ),
+    (
+        "Stage",
+        "Designed to stand out, our stage offers the perfect focal point for cultural performances, wedding rituals, speeches, and live events. It blends elegance with practical setup for lighting, stage decor, and audience visibility.",
+        "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
+    ),
+    (
+        "Seating Area",
+        "Guest comfort is central to our layout. The seating area is arranged to maintain clear views of the stage, easy movement between sections, and a balanced, welcoming experience for every visitor.",
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+    ),
+    (
+        "Exterior View",
+        "The outside look of the venue reflects the premium experience waiting inside. With a dignified facade and welcoming presence, the building creates a memorable first impression for your guests.",
+        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80",
+    ),
+    (
+        "Rooms",
+        "Our rooms offer flexible support spaces for preparation, rest, and event planning. Ideal for family gatherings, ceremonies, or behind-the-scenes coordination, they provide privacy and convenience.",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+    ),
+]
+
+space_tabs = st.tabs([item[0] for item in space_data])
+for tab, (title, description, image_url) in zip(space_tabs, space_data):
+    with tab:
+        st.image(image_url, use_container_width=True)
+        st.markdown(f"### {title}")
+        st.write(description)
 
 st.markdown(
     """
