@@ -4,6 +4,8 @@ import streamlit as st
 
 BASE_DIR = Path(__file__).parent
 VIDEO_PATH = BASE_DIR / "assets" / "diamond-palace-background.mp4"
+if not VIDEO_PATH.exists():
+    VIDEO_PATH = BASE_DIR / "diamond-palace-background.mp4"
 MAPS_URL = "https://maps.app.goo.gl/BhoKTmAhCCnToEUp8"
 
 st.set_page_config(page_title="Diamond Palace Convention Hall", page_icon="💎", layout="wide", initial_sidebar_state="collapsed")
@@ -32,7 +34,7 @@ html, body, [data-testid="stAppViewContainer"] { background:var(--dark); color:v
 .feature .num { color:var(--gold); font: .8rem Montserrat,sans-serif; }
 .feature h3 { font:400 1.65rem 'Cormorant Garamond',serif; color:var(--cream); }
 .feature p { font-size:.85rem; line-height:1.7; }
-.stButton>button, .stLinkButton>a { border:1px solid var(--gold)!important; border-radius:0!important; background:var(--gold)!important; color:#1b130b!important; font:600 .78rem Montserrat,sans-serif!important; letter-spacing:.07em; text-transform:uppercase; padding:.75rem 1.2rem!important; }
+.stButton>button, .stLinkButton>a { border:1px solid var(--gold)!important; border-radius:0!important; background:var(--gold)!important; color:#1b130b!important; font:600 .78rem Montserrat,sans-serif!important; letter-spacing:.12em; text-transform:uppercase; }
 .stLinkButton>a { display:inline-flex; align-items:center; text-decoration:none!important; }
 .contact { background:#211914; }
 .small-note { font: .75rem Montserrat,sans-serif; color:#bcae9b; }
@@ -66,11 +68,11 @@ st.markdown("""
 <div class="section">
   <div class="section-label">Your celebration starts here</div>
   <h2>Make moments memorable.</h2>
-  <p>Welcome to Diamond Palace Convention Hall on Hunasikatti Road, Ranebennur — a place to bring family and friends together for life's important celebrations. Contact us to discuss your event and arrangements.</p>
+  <p>Welcome to Diamond Palace Convention Hall on Hunasikatti Road, Ranebennur — a place to bring family and friends together for life's important celebrations. Contact us to discuss your event requirements and make your occasion special.</p>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="section-label" style="text-align:center">At a glance</div><h2 style="text-align:center;font:400 clamp(2.2rem,5vw,3.6rem) \'Cormorant Garamond\',serif;margin:.5rem 0 1.5rem">Celebrate together.</h2>', unsafe_allow_html=True)
+st.markdown('<div class="section-label" style="text-align:center">At a glance</div><h2 style="text-align:center;font:400 clamp(2.2rem,5vw,3.6rem) \'Cormorant Garamond\',serif;margin:.5rem 0 1.5rem">Highlights</h2>', unsafe_allow_html=True)
 c1, c2, c3 = st.columns(3)
 for col, num, title, description in [
     (c1, "01", "Weddings", "A welcoming setting for your wedding celebration and family gathering."),
@@ -80,8 +82,8 @@ for col, num, title, description in [
     with col:
         st.markdown(f'<div class="feature"><div class="num">{num}</div><h3>{title}</h3><p>{description}</p></div>', unsafe_allow_html=True)
 
-st.markdown('<div class="section contact"><div class="section-label">We’d love to hear from you</div><h2>Plan your occasion.</h2><p><strong>Diamond Palace Convention Hall</strong><br>Hunasikatti Road, Ranebennur, Karnataka<br>Phone / WhatsApp: <strong>XXXX</strong></p></div>', unsafe_allow_html=True)
+st.markdown('<div class="section contact"><div class="section-label">We’d love to hear from you</div><h2>Plan your occasion.</h2><p><strong>Diamond Palace Convention Hall</strong><br>Hunasikatti Road, Ranebennur<br>Contact us to book your event.</p></div>', unsafe_allow_html=True)
 a, b, c = st.columns([1, 1, 1])
 with b:
     st.link_button("Open Google Maps", MAPS_URL, use_container_width=True)
-st.markdown('<p class="small-note" style="text-align:center;margin:2rem 0 1rem">Phone and WhatsApp contact details are placeholders and can be updated later.</p><hr style="border-color:#59452b"><p class="small-note" style="text-align:center;padding:0 0 1.5rem">© 2026 Diamond Palace Convention Hall · Ranebennur</p>', unsafe_allow_html=True)
+st.markdown('<p class="small-note" style="text-align:center;margin:2rem 0 1rem">Phone and WhatsApp contact details are placeholders and can be updated later.</p><hr style="border-color:#59452b"><p style="text-align:center;color:#d5c0a0;font:400 .9rem Montserrat,sans-serif;">Diamond Palace Convention Hall — Ranebennur</p>', unsafe_allow_html=True)
