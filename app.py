@@ -1,6 +1,5 @@
-import base64
-from pathlib import Path
 import streamlit as st
+from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
 VIDEO_PATH = BASE_DIR / "assets" / "diamond-palace-background.mp4"
@@ -21,38 +20,44 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
 
     :root {
+        --bg: #120f0d;
+        --bg-soft: #1a1512;
+        --panel: rgba(255,255,255,0.03);
+        --panel-strong: rgba(255,255,255,0.06);
+        --line: rgba(216,179,106,0.32);
         --gold: #d8b36a;
         --gold-soft: #f0d7a6;
         --cream: #fff8eb;
-        --dark: #120f0d;
         --muted: #d9c8b1;
-        --line: rgba(216,179,106,0.35);
-        --panel: rgba(255,255,255,0.02);
+        --text: #f5efe6;
+        --shadow: rgba(0,0,0,0.24);
     }
 
     html, body, [data-testid="stAppViewContainer"] {
-        background: var(--dark);
+        background: var(--bg);
         color: var(--cream);
         font-family: 'Montserrat', sans-serif;
     }
 
     [data-testid="stHeader"] { background: transparent; }
-    .block-container {
-        padding-top: 0.5rem;
-        padding-bottom: 0;
-        max-width: 100%;
-        padding-left: 0;
-        padding-right: 0;
-    }
     #MainMenu, footer { visibility: hidden; }
+
+    .block-container {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin: 0;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
 
     .topbar {
         position: sticky;
         top: 0;
-        z-index: 20;
-        background: rgba(18, 15, 13, 0.72);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(255,255,255,0.06);
+        z-index: 50;
+        background: rgba(18, 15, 13, 0.78);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
         padding: 1rem 2rem;
     }
 
@@ -68,26 +73,26 @@ st.markdown(
     .brand {
         font-family: 'Cormorant Garamond', serif;
         letter-spacing: 0.08em;
-        font-size: 2rem;
+        font-size: 2.1rem;
         color: var(--gold-soft);
         font-weight: 600;
     }
 
     .nav {
         display: flex;
-        gap: 1.4rem;
+        gap: 1.35rem;
         flex-wrap: wrap;
         justify-content: center;
-        color: #f4e9d4;
-        font-size: 0.74rem;
+        color: var(--text);
+        font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 0.18em;
     }
 
     .nav a {
-        color: #f4e9d4;
+        color: var(--text);
         text-decoration: none;
-        opacity: 0.88;
+        opacity: 0.86;
         transition: 0.2s ease;
     }
 
@@ -95,20 +100,22 @@ st.markdown(
 
     .nav-button {
         border: 1px solid var(--gold);
-        background: transparent;
-        color: var(--gold);
+        background: rgba(216,179,106,0.05);
+        color: var(--gold-soft);
         padding: 0.8rem 1.2rem;
         text-transform: uppercase;
-        font-size: 0.7rem;
+        font-size: 0.72rem;
         letter-spacing: 0.15em;
         border-radius: 999px;
         text-decoration: none;
         transition: all 0.2s ease;
+        white-space: nowrap;
     }
 
     .nav-button:hover {
-        background: var(--gold);
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
         color: #1b130b;
+        transform: translateY(-1px);
     }
 
     .hero {
@@ -117,93 +124,78 @@ st.markdown(
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
+        padding: 5rem 1rem 3rem;
         overflow: hidden;
-        padding: 5rem 1rem 2rem;
-        margin: 0;
-        isolation: isolate;
         border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .hero video {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -4;
-        filter: saturate(0.8) contrast(1.1);
-    }
-
-    .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: -3;
-        background: linear-gradient(180deg, rgba(14,10,8,0.45), rgba(14,10,8,0.35) 40%, rgba(14,10,8,0.76));
+        background:
+            linear-gradient(180deg, rgba(18,15,13,0.22), rgba(18,15,13,0.7)),
+            url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     }
 
     .hero::after {
         content: '';
         position: absolute;
         inset: 18px;
-        border: 1px solid rgba(216,179,106,0.55);
-        z-index: -2;
+        border: 1px solid rgba(216,179,106,0.5);
         pointer-events: none;
     }
 
     .hero-content {
-        max-width: 1100px;
         position: relative;
         z-index: 1;
+        max-width: 1100px;
+        text-align: center;
         padding: 1rem 0 2rem;
     }
 
     .eyebrow {
-        font: 600 0.78rem 'Montserrat', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.30em;
-        color: var(--gold-soft);
         margin-bottom: 1rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+        font-weight: 600;
     }
 
     .hero h1 {
-        font: 700 clamp(3.2rem, 7vw, 7rem) 'Cormorant Garamond', serif;
-        line-height: 0.92;
-        margin: 0 0 0.7rem;
+        margin: 0;
         color: #fffaf2;
-        text-shadow: 0 12px 24px rgba(0,0,0,0.35);
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(3.2rem, 7vw, 7rem);
+        line-height: 0.92;
+        letter-spacing: 0.02em;
+        text-shadow: 0 12px 24px rgba(0,0,0,0.32);
     }
 
     .subtitle {
-        font: 500 0.9rem 'Montserrat', sans-serif;
+        margin-top: 1rem;
+        font-size: 0.9rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: #f5ead2;
-        margin-bottom: 2rem;
     }
 
     .cta-row {
         display: flex;
-        gap: 1rem;
         justify-content: center;
+        gap: 1rem;
         flex-wrap: wrap;
-        margin-top: 1rem;
+        margin-top: 2rem;
     }
 
     .button-primary, .button-secondary {
         display: inline-flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         min-width: 180px;
-        padding: 0.95rem 1.4rem;
+        padding: 0.95rem 1.45rem;
         border-radius: 999px;
         font-size: 0.72rem;
         letter-spacing: 0.15em;
         text-transform: uppercase;
         text-decoration: none;
-        transition: all 0.2s ease;
         font-weight: 700;
+        transition: all 0.2s ease;
     }
 
     .button-primary {
@@ -214,13 +206,18 @@ st.markdown(
 
     .button-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 15px 25px rgba(216,179,106,0.2);
+        box-shadow: 0 18px 28px rgba(216,179,106,0.18);
     }
 
     .button-secondary {
-        border: 1px solid rgba(255,255,255,0.4);
+        border: 1px solid rgba(255,255,255,0.5);
+        background: rgba(255,255,255,0.04);
         color: #fff;
-        background: rgba(255,255,255,0.03);
+    }
+
+    .button-secondary:hover {
+        background: rgba(255,255,255,0.08);
+        transform: translateY(-2px);
     }
 
     .section {
@@ -239,16 +236,19 @@ st.markdown(
 
     .section-heading .label {
         color: var(--gold);
-        font: 600 0.75rem 'Montserrat', sans-serif;
+        font-size: 0.75rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
         margin-bottom: 0.8rem;
+        font-weight: 700;
     }
 
     .section-heading h2 {
-        font: 400 clamp(2.4rem, 4vw, 4rem) 'Cormorant Garamond', serif;
         margin: 0;
         color: var(--cream);
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2.4rem, 4vw, 4rem);
+        font-weight: 400;
     }
 
     .story-grid {
@@ -258,10 +258,10 @@ st.markdown(
         align-items: center;
     }
 
-    .story-card, .info-card, .feature-box, .gallery-tile, .cta-box, .tour-card {
+    .story-card, .feature-box, .info-card, .gallery-tile, .cta-box, .tour-card {
         background: rgba(255,255,255,0.02);
         border: 1px solid var(--line);
-        box-shadow: 0 14px 28px rgba(0,0,0,0.15);
+        box-shadow: 0 14px 28px rgba(0,0,0,0.16);
     }
 
     .story-card {
@@ -269,16 +269,16 @@ st.markdown(
     }
 
     .story-card p {
+        margin: 0;
+        color: var(--muted);
         font-size: 1rem;
         line-height: 1.9;
-        color: var(--muted);
-        margin: 0;
     }
 
     .story-visual {
         min-height: 360px;
         background:
-            linear-gradient(135deg, rgba(26,20,15,0.45), rgba(26,20,15,0.2)),
+            linear-gradient(135deg, rgba(26,20,15,0.45), rgba(26,20,15,0.22)),
             url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
         border: 1px solid var(--line);
         position: relative;
@@ -288,12 +288,12 @@ st.markdown(
     .story-visual::after {
         content: 'Diamond Palace';
         position: absolute;
-        left: 1.5rem;
-        bottom: 1.5rem;
+        left: 1.4rem;
+        bottom: 1.2rem;
         font-family: 'Cormorant Garamond', serif;
         font-size: 2.4rem;
         letter-spacing: 0.06em;
-        color: rgba(255,248,235,0.9);
+        color: rgba(255,248,235,0.92);
     }
 
     .stats {
@@ -304,22 +304,22 @@ st.markdown(
     }
 
     .info-card {
-        padding: 1.6rem 1.1rem;
+        padding: 1.5rem 1rem;
         text-align: center;
     }
 
     .info-card .number {
         color: var(--gold);
-        font-size: 2rem;
         font-family: 'Cormorant Garamond', serif;
+        font-size: 2.3rem;
         line-height: 1;
-        margin-bottom: 0.4rem;
+        margin-bottom: 0.45rem;
     }
 
     .info-card .text {
         font-size: 0.72rem;
-        letter-spacing: 0.12em;
         text-transform: uppercase;
+        letter-spacing: 0.12em;
         color: var(--cream);
     }
 
@@ -339,14 +339,15 @@ st.markdown(
         font-size: 0.76rem;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        margin-bottom: 1rem;
         font-weight: 700;
+        margin-bottom: 1rem;
     }
 
     .feature-box h3 {
-        font: 400 2rem 'Cormorant Garamond', serif;
-        margin: 0 0 0.8rem;
+        font-family: 'Cormorant Garamond', serif;
         color: #fff9f1;
+        font-size: 2rem;
+        margin: 0 0 0.8rem;
     }
 
     .feature-box p {
@@ -366,7 +367,6 @@ st.markdown(
         display: grid;
         grid-template-columns: 1.3fr 0.9fr;
         gap: 1.2rem;
-        align-items: stretch;
     }
 
     .tour-image {
@@ -381,9 +381,10 @@ st.markdown(
     }
 
     .tour-card h3 {
-        font: 400 2.3rem 'Cormorant Garamond', serif;
         margin: 0 0 1rem;
         color: #fff9f3;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2.3rem;
     }
 
     .tour-card p {
@@ -411,13 +412,14 @@ st.markdown(
         overflow: hidden;
         background-size: cover;
         background-position: center;
+        border: 1px solid var(--line);
     }
 
     .gallery-tile::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg, rgba(18,15,13,0.1), rgba(18,15,13,0.7));
+        background: linear-gradient(180deg, rgba(18,15,13,0.12), rgba(18,15,13,0.72));
     }
 
     .gallery-tile span {
@@ -442,14 +444,15 @@ st.markdown(
     }
 
     .cta-box h3 {
-        font: 400 2.2rem 'Cormorant Garamond', serif;
         margin: 0;
         color: #fff9f3;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2.2rem;
     }
 
     .cta-box p {
+        margin: 0.7rem 0 0;
         color: var(--muted);
-        margin: 0.6rem 0 0;
     }
 
     .footer-note {
@@ -459,6 +462,21 @@ st.markdown(
         padding: 1rem 1rem 2rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
+    }
+
+    .video-shell {
+        max-width: 1200px;
+        margin: 2rem auto 0;
+        padding: 0 1rem;
+    }
+
+    .video-shell video {
+        width: 100%;
+        height: auto;
+        border-radius: 22px;
+        border: 1px solid var(--line);
+        box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+        display: block;
     }
 
     @media (max-width: 980px) {
@@ -502,28 +520,22 @@ st.markdown(
           <a href="#gallery">Gallery</a>
           <a href="#contact">Contact</a>
         </div>
-        <a class="nav-button" href="https://maps.app.goo.gl/BhoKTmAhCCnToEUp8" target="_blank">Get Directions</a>
+        <a class="nav-button" href="https://maps.app.goo.gl/BhoKTmAhCCnToEUp8" target="_blank" rel="noopener noreferrer">Get Directions</a>
       </div>
     </div>
     """,
     unsafe_allow_html=True,
 )
 
-video_src = ""
-if VIDEO_PATH.exists():
-    encoded = base64.b64encode(VIDEO_PATH.read_bytes()).decode("ascii")
-    video_src = f"data:video/mp4;base64,{encoded}"
-
 st.markdown(
-    f"""
+    """
     <div class="hero" id="home">
-      {f'<video autoplay muted loop playsinline preload="metadata"><source src="{video_src}" type="video/mp4"></video>' if video_src else ''}
       <div class="hero-content">
         <div class="eyebrow">A place for your special moments</div>
         <h1>Diamond Palace</h1>
         <div class="subtitle">Convention Hall • Ranebennur</div>
         <div class="cta-row">
-          <a class="button-primary" href="https://maps.app.goo.gl/BhoKTmAhCCnToEUp8" target="_blank">Plan Your Event</a>
+          <a class="button-primary" href="https://maps.app.goo.gl/BhoKTmAhCCnToEUp8" target="_blank" rel="noopener noreferrer">Plan Your Event</a>
           <a class="button-secondary" href="#contact">Contact Us</a>
         </div>
       </div>
@@ -531,6 +543,11 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+if VIDEO_PATH.exists():
+    st.markdown('<div class="video-shell">', unsafe_allow_html=True)
+    st.video(str(VIDEO_PATH))
+    st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown(
     """
@@ -542,7 +559,7 @@ st.markdown(
         </div>
         <div class="story-grid">
           <div class="story-card">
-            <p>Diamond Palace Convention Hall is designed for joyful family moments and unforgettable events. From weddings and receptions to birthdays, engagements, and community gatherings, our venue brings a graceful atmosphere with thoughtful hospitality and spacious comfort.</p>
+            <p>Diamond Palace Convention Hall is designed for joyful family moments and unforgettable events. From weddings and receptions to birthdays, engagements, corporates, and community gatherings, every celebration is shaped with elegance, warmth, and thoughtful planning.</p>
             <div class="stats">
               <div class="info-card">
                 <div class="number">500+</div>
@@ -583,7 +600,7 @@ st.markdown(
           <div class="feature-box">
             <div class="num">02</div>
             <h3>Corporate Events</h3>
-            <p>Professional, polished spaces for conferences, launches, seminars, and product showcases with a premium presentation.</p>
+            <p>Professional, polished spaces for conferences, launches, seminars, and product showcases that feel premium from start to finish.</p>
           </div>
           <div class="feature-box">
             <div class="num">03</div>
@@ -605,46 +622,18 @@ st.markdown(
           <div class="label">Explore the venue</div>
           <h2>Take a virtual tour through our spaces.</h2>
         </div>
+        <div class="tour-grid">
+          <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80');"></div>
+          <div class="tour-card">
+            <h3>Designed for grand experiences</h3>
+            <p>From the dining hall to the stage and seating arrangements, every space is curated to offer comfort, elegance, and seamless guest flow. The venue combines beauty with practicality for memorable celebrations.</p>
+          </div>
+        </div>
       </div>
     </div>
     """,
     unsafe_allow_html=True,
 )
-
-space_data = [
-    (
-        "Dining Hall",
-        "Our dining hall is designed for comfort, elegance, and smooth guest flow. With warm lighting, refined decor, and a smart layout, it creates an inviting atmosphere for celebrations, receptions, and family gatherings.",
-        "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-    ),
-    (
-        "Stage",
-        "Designed to stand out, our stage offers the perfect focal point for cultural performances, wedding rituals, speeches, and live events. It blends elegance with practical setup for lighting, stage decor, and audience visibility.",
-        "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
-    ),
-    (
-        "Seating Area",
-        "Guest comfort is central to our layout. The seating area is arranged to maintain clear views of the stage, easy movement between sections, and a balanced, welcoming experience for every visitor.",
-        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
-    ),
-    (
-        "Exterior View",
-        "The outside look of the venue reflects the premium experience waiting inside. With a dignified facade and welcoming presence, the building creates a memorable first impression for your guests.",
-        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80",
-    ),
-    (
-        "Rooms",
-        "Our rooms offer flexible support spaces for preparation, rest, and event planning. Ideal for family gatherings, ceremonies, or behind-the-scenes coordination, they provide privacy and convenience.",
-        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-    ),
-]
-
-space_tabs = st.tabs([item[0] for item in space_data])
-for tab, (title, description, image_url) in zip(space_tabs, space_data):
-    with tab:
-        st.image(image_url, use_container_width=True)
-        st.markdown(f"### {title}")
-        st.write(description)
 
 st.markdown(
     """
@@ -711,7 +700,7 @@ st.markdown(
             <p>Let’s plan a memorable occasion in a venue built for joy, comfort, and elegance.</p>
           </div>
           <div class="cta-row" style="margin-top:0; justify-content:flex-end;">
-            <a class="button-primary" href="https://maps.app.goo.gl/BhoKTmAhCCnToEUp8" target="_blank">Get Directions</a>
+            <a class="button-primary" href="https://maps.app.goo.gl/BhoKTmAhCCnToEUp8" target="_blank" rel="noopener noreferrer">Get Directions</a>
             <a class="button-secondary" href="tel:+919999999999">Call Now</a>
           </div>
         </div>
