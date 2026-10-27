@@ -52,6 +52,7 @@
         >
           <source src="./diamond-palace-background.mp4" type="video/mp4" />
         </video>
+
         <div class="hero-content container">
           <div class="eyebrow">A place for your special moments</div>
           <h1>Diamond Palace</h1>
@@ -290,7 +291,6 @@
       const musicToggle = document.getElementById('musicToggle');
       let audioContext;
       let masterGain;
-      let ambientNodes = [];
 
       function initAmbientMusic() {
         if (audioContext) return;
@@ -334,8 +334,6 @@
 
           osc.start();
           lfo.start();
-
-          ambientNodes.push({ osc, gain, lfo, filter, lfoGain });
         });
       }
 
