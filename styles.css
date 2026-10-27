@@ -1,4 +1,4 @@
-:root {
+.root {
   --bg: #120f0d;
   --bg-soft: #1a1512;
   --panel: rgba(255,255,255,0.03);
@@ -131,9 +131,8 @@ a {
   justify-content: center;
   padding: 5rem 0 3rem;
   overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(18,15,13,0.2), rgba(18,15,13,0.72)),
-    url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  isolation: isolate;
+  background: linear-gradient(180deg, rgba(18,15,13,0.2), rgba(18,15,13,0.72));
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
@@ -146,6 +145,7 @@ a {
   display: block;
   z-index: 0;
   filter: brightness(0.72) saturate(0.8);
+  pointer-events: none;
 }
 
 .hero::after {
