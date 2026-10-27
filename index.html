@@ -41,7 +41,15 @@
 
     <main>
       <section class="hero" id="home">
-        <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80">
+        <video
+          class="hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80"
+        >
           <source src="./diamond-palace-background.mp4" type="video/mp4" />
         </video>
         <div class="hero-content container">
@@ -266,6 +274,8 @@
       Diamond Palace Convention Hall • Hunasikatti Road, Ranebennur
     </footer>
 
+    <button id="musicToggle" class="music-toggle" type="button" aria-label="Toggle soothing background music">Music: Off</button>
+
     <a
       class="whatsapp-float"
       href="https://wa.me/919999999999"
@@ -275,5 +285,85 @@
     >
       WhatsApp
     </a>
+
+    <script>
+      const musicToggle = document.getElementById('musicToggle');
+      let audioContext;
+      let masterGain;
+      let ambientNodes = [];
+
+      function initAmbientMusic() {
+        if (audioContext) return;
+
+        const AudioCtor = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtor) return;
+
+        audioContext = new AudioCtor();
+        masterGain = audioContext.createGain();
+        masterGain.gain.value = 0.0001;
+        masterGain.connect(audioContext.destination);
+
+        const notes = [174.61, 220, 261.63, 293.66];
+
+        notes.forEach((freq, index) => {
+          const osc = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          const lfo = audioContext.createOscillator();
+          const lfoGain = audioContext.createGain();
+          const filter = audioContext.createBiquadFilter();
+
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+
+          filter.type = 'lowpass';
+          filter.frequency.value = 900 + index * 150;
+          filter.Q.value = 0.5;
+
+          gain.gain.value = 0.012 + index * 0.004;
+
+          lfo.type = 'sine';
+          lfo.frequency.value = 0.08 + index * 0.02;
+          lfoGain.gain.value = 6 + index * 2;
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(masterGain);
+
+          lfo.connect(lfoGain);
+          lfoGain.connect(osc.frequency);
+
+          osc.start();
+          lfo.start();
+
+          ambientNodes.push({ osc, gain, lfo, filter, lfoGain });
+        });
+      }
+
+      async function toggleMusic() {
+        initAmbientMusic();
+
+        if (!audioContext) {
+          return;
+        }
+
+        const isOn = musicToggle.dataset.on === 'true';
+
+        if (audioContext.state === 'suspended') {
+          await audioContext.resume();
+        }
+
+        if (isOn) {
+          masterGain.gain.setTargetAtTime(0.0001, audioContext.currentTime, 0.5);
+          musicToggle.dataset.on = 'false';
+          musicToggle.textContent = 'Music: Off';
+        } else {
+          masterGain.gain.setTargetAtTime(0.045, audioContext.currentTime, 0.8);
+          musicToggle.dataset.on = 'true';
+          musicToggle.textContent = 'Music: On';
+        }
+      }
+
+      musicToggle.addEventListener('click', toggleMusic);
+    </script>
   </body>
 </html>
