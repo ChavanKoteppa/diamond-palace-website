@@ -127,9 +127,20 @@ st.markdown(
         padding: 5rem 1rem 3rem;
         overflow: hidden;
         border-bottom: 1px solid rgba(255,255,255,0.08);
-        background:
-            linear-gradient(180deg, rgba(18,15,13,0.22), rgba(18,15,13,0.7)),
-            url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        background: linear-gradient(180deg, rgba(18,15,13,0.22), rgba(18,15,13,0.7));
+        isolation: isolate;
+    }
+
+    .hero-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        z-index: 0;
+        filter: brightness(0.72) saturate(0.8);
+        pointer-events: none;
     }
 
     .hero::after {
@@ -138,6 +149,7 @@ st.markdown(
         inset: 18px;
         border: 1px solid rgba(216,179,106,0.5);
         pointer-events: none;
+        z-index: 2;
     }
 
     .hero-content {
@@ -464,21 +476,6 @@ st.markdown(
         text-transform: uppercase;
     }
 
-    .video-shell {
-        max-width: 1200px;
-        margin: 2rem auto 0;
-        padding: 0 1rem;
-    }
-
-    .video-shell video {
-        width: 100%;
-        height: auto;
-        border-radius: 22px;
-        border: 1px solid var(--line);
-        box-shadow: 0 18px 45px rgba(0,0,0,0.28);
-        display: block;
-    }
-
     @media (max-width: 980px) {
         .story-grid, .features-grid, .gallery-grid, .amenities-grid, .tour-grid {
             grid-template-columns: 1fr 1fr;
@@ -527,9 +524,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+hero_video_html = """
+<video class="hero-video" autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80">
+  <source src="/diamond-palace-background.mp4" type="video/mp4" />
+</video>
+"""
+
 st.markdown(
-    """
+    f"""
     <div class="hero" id="home">
+      {hero_video_html}
       <div class="hero-content">
         <div class="eyebrow">A place for your special moments</div>
         <h1>Diamond Palace</h1>
@@ -544,11 +548,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-if VIDEO_PATH.exists():
-    st.markdown('<div class="video-shell">', unsafe_allow_html=True)
-    st.video(str(VIDEO_PATH))
-    st.markdown('</div>', unsafe_allow_html=True)
-
 st.markdown(
     """
     <div class="section" id="about">
@@ -559,7 +558,7 @@ st.markdown(
         </div>
         <div class="story-grid">
           <div class="story-card">
-            <p>Diamond Palace Convention Hall is designed for joyful family moments and unforgettable events. From weddings and receptions to birthdays, engagements, corporates, and community gatherings, every celebration is shaped with elegance, warmth, and thoughtful planning.</p>
+            <p>Diamond Palace Convention Hall is designed for joyful family moments and unforgettable events. From weddings and receptions to birthdays, engagements, corporates, and community gatherings, every occasion is shaped with elegance, warmth, and thoughtful planning.</p>
             <div class="stats">
               <div class="info-card">
                 <div class="number">500+</div>
@@ -626,7 +625,7 @@ st.markdown(
           <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80');"></div>
           <div class="tour-card">
             <h3>Designed for grand experiences</h3>
-            <p>From the dining hall to the stage and seating arrangements, every space is curated to offer comfort, elegance, and seamless guest flow. The venue combines beauty with practicality for memorable celebrations.</p>
+            <p>From the dining hall to the stage and seating arrangements, every space is curated to offer comfort, elegance, and seamless guest flow. The venue combines beauty with practicality and convenience.</p>
           </div>
         </div>
       </div>
