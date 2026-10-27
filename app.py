@@ -474,6 +474,7 @@ st.markdown(
         padding: 1rem 1rem 2rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
+        line-height: 1.8;
     }
 
     @media (max-width: 980px) {
@@ -710,6 +711,6 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="footer-note" id="contact">Diamond Palace Convention Hall • Hunasikatti Road, Ranebennur</div>',
+    '<div class="footer-note" id="contact">Diamond Palace Convention Hall • Hunasikatti Road, Ranebennur<br>Developed and Managed by Chavan Koteppa</div>',
     unsafe_allow_html=True,
 )
