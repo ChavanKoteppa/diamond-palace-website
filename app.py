@@ -5,6 +5,7 @@ BASE_DIR = Path(__file__).parent
 VIDEO_PATH = BASE_DIR / "assets" / "diamond-palace-background.mp4"
 if not VIDEO_PATH.exists():
     VIDEO_PATH = BASE_DIR / "diamond-palace-background.mp4"
+VIDEO_URL = "https://raw.githubusercontent.com/ChavanKoteppa/diamond-palace-website/main/diamond-palace-background.mp4"
 MAPS_URL = "https://maps.app.goo.gl/BhoKTmAhCCnToEUp8"
 
 st.set_page_config(
@@ -525,9 +526,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-hero_video_html = """
+hero_video_html = f"""
 <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80">
-  <source src="/diamond-palace-background.mp4" type="video/mp4" />
+  <source src="{VIDEO_URL}" type="video/mp4" />
 </video>
 """
 
@@ -559,7 +560,7 @@ st.markdown(
         </div>
         <div class="story-grid">
           <div class="story-card">
-            <p>Diamond Palace Convention Hall is designed for joyful family moments and unforgettable events. From weddings and receptions to birthdays, engagements, corporates, and community gatherings, every occasion is shaped with elegance, warmth, and thoughtful planning.</p>
+            <p>Diamond Palace Convention Hall is designed for joyful family moments and unforgettable events. From weddings and receptions to birthdays, engagements, corporates, and community gatherings, the venue blends elegance, comfort, and practicality in one beautiful setting.</p>
             <div class="stats">
               <div class="info-card">
                 <div class="number">500+</div>
@@ -626,7 +627,7 @@ st.markdown(
           <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80');"></div>
           <div class="tour-card">
             <h3>Designed for grand experiences</h3>
-            <p>From the dining hall to the stage and seating arrangements, every space is curated to offer comfort, elegance, and seamless guest flow. The venue combines beauty with practicality and convenience.</p>
+            <p>From the dining hall to the stage and seating arrangements, every space is curated to offer comfort, elegance, and seamless guest flow. The venue combines beauty with practicality to support every kind of event and celebration.</p>
           </div>
         </div>
       </div>
