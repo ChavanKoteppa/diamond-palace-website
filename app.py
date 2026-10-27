@@ -2,9 +2,10 @@ import streamlit as st
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
-VIDEO_PATH = BASE_DIR / "assets" / "diamond-palace-background.mp4"
-if not VIDEO_PATH.exists():
-    VIDEO_PATH = BASE_DIR / "diamond-palace-background.mp4"
+LOCAL_VIDEO_PATH = BASE_DIR / "assets" / "diamond-palace-background.mp4"
+if not LOCAL_VIDEO_PATH.exists():
+    LOCAL_VIDEO_PATH = BASE_DIR / "diamond-palace-background.mp4"
+
 VIDEO_URL = "https://raw.githubusercontent.com/ChavanKoteppa/diamond-palace-website/main/diamond-palace-background.mp4"
 MAPS_URL = "https://maps.app.goo.gl/BhoKTmAhCCnToEUp8"
 
@@ -25,13 +26,12 @@ st.markdown(
         --bg-soft: #1a1512;
         --panel: rgba(255,255,255,0.03);
         --panel-strong: rgba(255,255,255,0.06);
-        --line: rgba(216,179,106,0.32);
+        --line: rgba(216,179,106,0.28);
         --gold: #d8b36a;
         --gold-soft: #f0d7a6;
         --cream: #fff8eb;
         --muted: #d9c8b1;
         --text: #f5efe6;
-        --shadow: rgba(0,0,0,0.24);
     }
 
     html, body, [data-testid="stAppViewContainer"] {
@@ -56,7 +56,7 @@ st.markdown(
         position: sticky;
         top: 0;
         z-index: 50;
-        background: rgba(18, 15, 13, 0.78);
+        background: rgba(18, 15, 13, 0.80);
         backdrop-filter: blur(14px);
         border-bottom: 1px solid rgba(255,255,255,0.08);
         padding: 1rem 2rem;
@@ -94,7 +94,6 @@ st.markdown(
         color: var(--text);
         text-decoration: none;
         opacity: 0.86;
-        transition: 0.2s ease;
     }
 
     .nav a:hover { color: var(--gold); }
@@ -109,14 +108,7 @@ st.markdown(
         letter-spacing: 0.15em;
         border-radius: 999px;
         text-decoration: none;
-        transition: all 0.2s ease;
         white-space: nowrap;
-    }
-
-    .nav-button:hover {
-        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
-        color: #1b130b;
-        transform: translateY(-1px);
     }
 
     .hero {
@@ -138,7 +130,6 @@ st.markdown(
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
         z-index: 0;
         filter: brightness(0.72) saturate(0.8);
         pointer-events: none;
@@ -208,7 +199,6 @@ st.markdown(
         text-transform: uppercase;
         text-decoration: none;
         font-weight: 700;
-        transition: all 0.2s ease;
     }
 
     .button-primary {
@@ -217,20 +207,10 @@ st.markdown(
         border: 1px solid rgba(255,255,255,0.18);
     }
 
-    .button-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 18px 28px rgba(216,179,106,0.18);
-    }
-
     .button-secondary {
         border: 1px solid rgba(255,255,255,0.5);
         background: rgba(255,255,255,0.04);
         color: #fff;
-    }
-
-    .button-secondary:hover {
-        background: rgba(255,255,255,0.08);
-        transform: translateY(-2px);
     }
 
     .section {
@@ -290,9 +270,8 @@ st.markdown(
 
     .story-visual {
         min-height: 360px;
-        background:
-            linear-gradient(135deg, rgba(26,20,15,0.45), rgba(26,20,15,0.22)),
-            url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+        background: linear-gradient(135deg, rgba(26,20,15,0.45), rgba(26,20,15,0.22)),
+                    url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
         border: 1px solid var(--line);
         position: relative;
         overflow: hidden;
@@ -344,7 +323,7 @@ st.markdown(
 
     .feature-box {
         padding: 2rem 1.5rem;
-        min-height: 240px;
+        min-height: 220px;
     }
 
     .feature-box .num {
@@ -479,18 +458,9 @@ st.markdown(
     }
 
     @media (max-width: 980px) {
-        .story-grid, .features-grid, .gallery-grid, .amenities-grid, .tour-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .story-grid, .tour-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .topbar-inner {
-            flex-direction: column;
-            text-align: center;
-        }
+        .story-grid, .features-grid, .gallery-grid, .amenities-grid, .tour-grid { grid-template-columns: 1fr 1fr; }
+        .story-grid, .tour-grid { grid-template-columns: 1fr; }
+        .topbar-inner { flex-direction: column; text-align: center; }
     }
 
     @media (max-width: 640px) {
@@ -526,7 +496,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-hero_video_html = f"""
+hero_video = f"""
 <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80">
   <source src="{VIDEO_URL}" type="video/mp4" />
 </video>
@@ -535,13 +505,13 @@ hero_video_html = f"""
 st.markdown(
     f"""
     <div class="hero" id="home">
-      {hero_video_html}
+      {hero_video}
       <div class="hero-content">
         <div class="eyebrow">A place for your special moments</div>
         <h1>Diamond Palace</h1>
         <div class="subtitle">Convention Hall • Ranebennur</div>
         <div class="cta-row">
-          <a class="button-primary" href="https://maps.app.goo.gl/BhoKTmAhCCnToEUp8" target="_blank" rel="noopener noreferrer">Plan Your Event</a>
+          <a class="button-primary" href="{MAPS_URL}" target="_blank" rel="noopener noreferrer">Plan Your Event</a>
           <a class="button-secondary" href="#contact">Contact Us</a>
         </div>
       </div>
@@ -560,7 +530,11 @@ st.markdown(
         </div>
         <div class="story-grid">
           <div class="story-card">
-            <p>Diamond Palace Convention Hall is designed for joyful family moments and unforgettable events. From weddings and receptions to birthdays, engagements, corporates, and community gatherings, the venue blends elegance, comfort, and practicality in one beautiful setting.</p>
+            <p>
+              Diamond Palace Convention Hall is designed for joyful family moments and unforgettable events.
+              From weddings and receptions to birthdays, engagements, corporate gatherings, and community celebrations,
+              every occasion is shaped with elegance, warmth, and thoughtful planning.
+            </p>
             <div class="stats">
               <div class="info-card">
                 <div class="number">500+</div>
@@ -627,7 +601,10 @@ st.markdown(
           <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80');"></div>
           <div class="tour-card">
             <h3>Designed for grand experiences</h3>
-            <p>From the dining hall to the stage and seating arrangements, every space is curated to offer comfort, elegance, and seamless guest flow. The venue combines beauty with practicality to support every kind of event and celebration.</p>
+            <p>
+              From the dining hall to the stage and seating arrangements, every space is curated to offer comfort,
+              elegance, and seamless guest flow. The venue combines beauty with practicality for memorable celebrations.
+            </p>
           </div>
         </div>
       </div>
